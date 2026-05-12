@@ -1,12 +1,17 @@
-const args = process.argv.slice(2);
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
 
-function run() {
-  if (args.length === 0) {
-    console.log("⚠️ No arguments provided");
-    return;
-  }
-
-  console.log("🛠️ Running utility with:", args);
+export function start() {
+  yargs(hideBin(process.argv))
+    .command("status", "Show system status", {}, () => {
+      console.log("✅ System OK");
+    })
+    .command("version", "Show version", {}, () => {
+      console.log("v1.0.0");
+    })
+    .demandCommand(1, "⚠️  Specify a command. Run --help for options.")
+    .help()
+    .parse();
 }
 
-run();
+start();
